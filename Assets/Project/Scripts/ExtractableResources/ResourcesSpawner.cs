@@ -34,8 +34,9 @@ public class ResourcesSpawner : Spawner<Resource>
     public override void PerformOnGet(Resource resource)
     {
         _resources.Add(resource);
-
+       
         resource.gameObject.SetActive(true);
+        resource.SetNameParent(Parent.name);
         resource.transform.position = GetPositionSpawn();
         resource.Removed += RemoveObject;
     }

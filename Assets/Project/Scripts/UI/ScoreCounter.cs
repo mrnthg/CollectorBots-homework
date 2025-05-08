@@ -8,7 +8,7 @@ public class ScoreCounter : MonoBehaviour
 
     public event Action<int> ScoreChanged;
 
-    private void Awake()
+    private void Start()
     {
         Reset();
     }

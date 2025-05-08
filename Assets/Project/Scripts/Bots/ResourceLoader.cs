@@ -7,45 +7,34 @@ public class ResourceLoader : MonoBehaviour
     [SerializeField] private Transform _cargoPosition;
 
     private Resource _transportableResource;
-    private BotCollisonHandler _botCollisonHandler;
     private BotCollector _botCollector;
-
-    public event Action Loaded;
-    public event Action Unloaded;
 
     private void Awake()
     {
-        _botCollisonHandler = GetComponent<BotCollisonHandler>();
         _botCollector = GetComponent<BotCollector>();
     }
 
-    private void OnEnable()
+    public bool LoadProcess(Resource resource)
     {
-        _botCollisonHandler.CollisionDetected += LoadProcess;
-    }
+        bool isLoad = false;
 
-    private void OnDisable()
-    {
-        _botCollisonHandler.CollisionDetected -= LoadProcess;
-    }
-
-    private void LoadProcess(Resource resource)
-    {
         if (resource is Iridium && _botCollector.IsLoad == false)
         {           
             if (resource.TryGetComponent(out Transform transform))
             {
-                Loaded?.Invoke();
                 _transportableResource = resource;
                 _transportableResource.transform.position = _cargoPosition.position;
-                _transportableResource.transform.SetParent(this.transform);
+                _transportableResource.transform.SetParent(this.transform);               
             }
+
+            isLoad = true;
         }
+
+        return isLoad;
     }
 
     public Resource UnloadProcess()
     {
-        Unloaded?.Invoke();
         return _transportableResource;
     }
 }

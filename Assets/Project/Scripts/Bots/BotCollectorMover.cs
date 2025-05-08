@@ -8,7 +8,6 @@ public class BotCollectorMover : MonoBehaviour
     private BotCollector _botCollector;
     private NavMeshAgent _agent;
     private PathBuilder _pathBuilder;
-    private ResourceLoader _resourceLoader;
 
     public event Action Moved;
     public event Action Stayed;
@@ -19,18 +18,7 @@ public class BotCollectorMover : MonoBehaviour
     {
         _botCollector = GetComponent<BotCollector>();
         _pathBuilder = GetComponent<PathBuilder>();
-        _resourceLoader = GetComponent<ResourceLoader>();
         _agent = GetComponent<NavMeshAgent>();
-    }
-
-    private void OnEnable()
-    {
-        _resourceLoader.Loaded += GoHome;       
-    }
-
-    private void OnDisable()
-    {
-        _resourceLoader.Loaded -= GoHome;
     }
 
     private void Update()
@@ -43,7 +31,7 @@ public class BotCollectorMover : MonoBehaviour
 
     public void StartMove(Transform target)
     {       
-        if (target != null && _pathBuilder.CheckPath(_agent, target))
+        if (target != null && _pathBuilder.GetFreePath(_agent, target))
         {          
             Moved?.Invoke();
             _agent.SetDestination(target.transform.position);

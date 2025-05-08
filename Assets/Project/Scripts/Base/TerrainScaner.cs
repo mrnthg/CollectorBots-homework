@@ -6,7 +6,6 @@ public class TerrainScaner : MonoBehaviour
     [SerializeField] private float _radiusScan;
 
     private Vector3 _basePosition;
-    private string _findParentName = "Iridiums";
 
     private void Awake()
     {
@@ -20,7 +19,7 @@ public class TerrainScaner : MonoBehaviour
 
         foreach (Collider hit in colliders)
         {
-            if (hit.TryGetComponent(out Resource resource) && hit.transform.parent.name == _findParentName)
+            if (hit.TryGetComponent(out Resource resource) && hit.transform.parent.name == resource.StartNameParent)
             {
                 _resources.Add(resource);
             }

@@ -14,7 +14,7 @@ public class PathBuilder : MonoBehaviour
         _path = new NavMeshPath();
     }
 
-    public bool CheckPath(NavMeshAgent agent, Transform target)
+    public bool GetFreePath(NavMeshAgent agent, Transform target)
     {
         _coroutine = StartCoroutine(NavigatePath(agent, target));
         return _isPathFree;

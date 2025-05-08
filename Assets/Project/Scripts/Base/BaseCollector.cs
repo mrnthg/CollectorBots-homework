@@ -9,7 +9,7 @@ public class BaseCollector : MonoBehaviour
 
     private List<Bot> _collectorBots;
     private ResourceHandler _resourceHandler;
-    private BotCollectorMover _botCollector = null;
+    private BotCollectorMover _botCollector;
 
     private void Awake()
     {
@@ -42,20 +42,15 @@ public class BaseCollector : MonoBehaviour
 
     private void SetTarget(BotCollector bot)
     { 
-        if (bot.TryGetComponent(out BotCollectorMover botCollectorMover))
-        {
-            _botCollector = botCollectorMover;
-        }
-
-        if (bot.IsLoad == false && bot.IsMove == false && _botCollector != null)
+        if (bot.TryGetComponent(out BotCollectorMover botCollectorMover) && bot.IsLoad == false && bot.IsMove == false)
         {
             if (_resourceHandler.HandleResources.Count != 0)
             {
-                _botCollector.StartMove(_resourceHandler.FindClosestResource().transform);
+                botCollectorMover.StartMove(_resourceHandler.FindClosestResource().transform);
             }
             else
             {
-                _botCollector.GoHome();
+                botCollectorMover.GoHome();
             }
         }
     }

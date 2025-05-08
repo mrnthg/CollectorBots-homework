@@ -17,9 +17,9 @@ public class ResourceHarvester : MonoBehaviour
     {
         Resource resource;
 
-        if (bot.IsLoad && bot.TryGetComponent(out ResourceLoader resourceLoader))
+        if (bot.IsLoad)
         {
-            resource = resourceLoader.UnloadProcess();
+            resource = bot.Unload();
             ResourceReceived?.Invoke();
             resource.Remove();
         }

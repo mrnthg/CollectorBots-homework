@@ -8,6 +8,7 @@ public class ResourcesSpawner : Spawner<Resource>
     [SerializeField] private Collider _spawnZone;
     [SerializeField] private int _maxResourceCount;
 
+    private float _posY = -1.2f;
     private Bounds _spawnBounds;
     private List<Resource> _resources = new List<Resource>();
     private float _durationSpawn = 15f;
@@ -16,10 +17,6 @@ public class ResourcesSpawner : Spawner<Resource>
     private void OnEnable()
     {
         _duration = new WaitForSeconds(_durationSpawn);
-    }
-
-    private void Start()
-    {
         CreateAllResources();
     }
 
@@ -58,7 +55,7 @@ public class ResourcesSpawner : Spawner<Resource>
         float posX = Random.Range(_spawnBounds.min.x, _spawnBounds.max.x);
         float posZ = Random.Range(_spawnBounds.min.z, _spawnBounds.max.z);
 
-        return new Vector3(posX, -1.2f, posZ);
+        return new Vector3(posX, _posY, posZ);
     }
 
     private void CreateAllResources()

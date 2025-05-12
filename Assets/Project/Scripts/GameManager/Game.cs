@@ -7,11 +7,11 @@ public class Game : MonoBehaviour
 
     private void OnEnable()
     {
-        _resourceHarvester.ResourceReceived += _scoreCounter.AddScore;
+        _resourceHarvester.ResourceReceived += _scoreCounter.AddValue;
     }
 
     private void OnDisable()
     {
-        _resourceHarvester.ResourceReceived -= _scoreCounter.AddScore;
+        _resourceHarvester.ResourceReceived -= _scoreCounter.AddValue;
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(BotCollisonHandler), typeof(BotCollector))]
+[RequireComponent(typeof(Resource—ollisionHandler), typeof(BotCollector))]
 public class ResourceLoader : MonoBehaviour
 {
     [SerializeField] private Transform _cargoPosition;

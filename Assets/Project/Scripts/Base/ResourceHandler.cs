@@ -5,25 +5,35 @@ using UnityEngine;
 [RequireComponent(typeof(TerrainScaner))]
 public class ResourceHandler : MonoBehaviour
 {
+    [SerializeField] private ResourceHarvester _harvester;
+
     private TerrainScaner _terrainScaner;
     private List<Resource> _handleResources;
     private Vector3 _basePosition;
     private float _cooldown = 3.5f;
     private WaitForSeconds _duration;
 
-    public List<Resource> HandleResources => _handleResources;
-
     private void Awake()
-    {
+    {       
         _handleResources = new List<Resource>();
         _duration = new WaitForSeconds(_cooldown);
         _basePosition = transform.position;       
-        _terrainScaner = GetComponent<TerrainScaner>();                 
+        _terrainScaner = GetComponent<TerrainScaner>();
+    }
+
+    private void OnEnable()
+    {
+        _harvester.ResourceReceived += AddResources;
+    }
+
+    private void OnDisable()
+    {
+        _harvester.ResourceReceived -= AddResources;
     }
 
     private void Start()
     {
-        StartCoroutine(StartHandler());
+        AddResources();
     }
 
     public Resource FindClosestResource()
@@ -34,12 +44,12 @@ public class ResourceHandler : MonoBehaviour
         foreach (Resource resource in _handleResources)
         {
             Vector3 difference = resource.transform.position - _basePosition;
-            float currentDistance = difference.sqrMagnitude;
+            float SqrDifference = difference.sqrMagnitude;
 
-            if (currentDistance < distance)
+            if (SqrDifference < distance)
             {
                 target = resource;
-                distance = currentDistance;
+                distance = SqrDifference;
             }
         }
 
@@ -48,18 +58,14 @@ public class ResourceHandler : MonoBehaviour
         return target;
     }
 
-    private void AddResources()
+    public int GetCountResources()
+    {
+        return _handleResources.Count;
+    }
+
+    public void AddResources()
     {
         _handleResources.Clear();
         _handleResources = _terrainScaner.Scan();
-    }
-
-    private IEnumerator StartHandler()
-    {
-        while (enabled)
-        {
-            AddResources();
-            yield return _duration;
-        }
     }
 }

@@ -9,7 +9,6 @@ public class BaseCollector : MonoBehaviour
 
     private List<Bot> _collectorBots;
     private ResourceHandler _resourceHandler;
-    private BotCollectorMover _botCollector;
 
     private void Awake()
     {
@@ -41,16 +40,18 @@ public class BaseCollector : MonoBehaviour
     }
 
     private void SetTarget(BotCollector bot)
-    { 
+    {       
         if (bot.TryGetComponent(out BotCollectorMover botCollectorMover) && bot.IsLoad == false && bot.IsMove == false)
         {
-            if (_resourceHandler.HandleResources.Count != 0)
+            if (_resourceHandler.GetCountResources() != 0)
             {
-                botCollectorMover.StartMove(_resourceHandler.FindClosestResource().transform);
+                Resource resource = _resourceHandler.FindClosestResource();
+                ResourceProcessing(resource);
+                botCollectorMover.StartMove(resource.transform);
             }
             else
             {
-                botCollectorMover.GoHome();
+                botCollectorMover.GoHome(bot.HomePosition);
             }
         }
     }
@@ -66,5 +67,10 @@ public class BaseCollector : MonoBehaviour
 
             yield return null;
         }        
+    }
+
+    private void ResourceProcessing(Resource resource)
+    {
+        resource.transform.SetParent(transform);
     }
 }   

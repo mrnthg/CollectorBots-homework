@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ScoreCounter : MonoBehaviour
 {
-    private int _score;
-    private int _startScore = 0;
+    private int _value;
+    private int _startValue = 0;
 
     public event Action<int> ScoreChanged;
 
@@ -13,15 +13,15 @@ public class ScoreCounter : MonoBehaviour
         Reset();
     }
 
-    public void AddScore()
+    public void AddValue()
     {
-        _score++;
-        ScoreChanged?.Invoke(_score);
+        _value++;
+        ScoreChanged?.Invoke(_value);
     }
 
     private void Reset()
     {
-        _score = _startScore;
-        ScoreChanged?.Invoke(_score);
+        _value = _startValue;
+        ScoreChanged?.Invoke(_value);
     }
 }

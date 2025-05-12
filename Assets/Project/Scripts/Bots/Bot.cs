@@ -3,11 +3,11 @@ using UnityEngine;
 
 public abstract class Bot : PoolableObject
 {
-    private Vector3 _homeTransform;
+    private Vector3 _homePosition;
 
     public event Action<Bot> Removed;
 
-    public Vector3 HomeTransform => _homeTransform;
+    public Vector3 HomePosition => _homePosition;
 
     public void Remove()
     {
@@ -16,6 +16,6 @@ public abstract class Bot : PoolableObject
 
     public void SetHome(Vector3 position)
     {
-        _homeTransform = position;
+        _homePosition = position;
     }
 }

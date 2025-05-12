@@ -1,11 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ResourceLoader), typeof(ResourceLoader), typeof(BotCollisonHandler))]
+[RequireComponent(typeof(ResourceLoader), typeof(ResourceLoader), typeof(Resource—ollisionHandler))]
 public class BotCollector : Bot
 {
     private ResourceLoader _resourceLoader;
     private BotCollectorMover _botCollectorMover;
-    private BotCollisonHandler _botCollisonHandler;
+    private Resource—ollisionHandler _botCollisonHandler;
     private bool _isLoad;
     private bool _isMove;
 
@@ -18,19 +18,19 @@ public class BotCollector : Bot
         _isMove = false;
         _resourceLoader = GetComponent<ResourceLoader>();
         _botCollectorMover = GetComponent<BotCollectorMover>();
-        _botCollisonHandler = GetComponent<BotCollisonHandler>();
+        _botCollisonHandler = GetComponent<Resource—ollisionHandler>();
     }
 
     private void OnEnable()
     {
-        _botCollisonHandler.CollisionDetected += Load;
+        _botCollisonHandler.ResourceCollisionDetected += Load;
         _botCollectorMover.Moved += Move;
         _botCollectorMover.Stayed += Stay;
     }
 
     private void OnDisable()
     {
-        _botCollisonHandler.CollisionDetected += Load;
+        _botCollisonHandler.ResourceCollisionDetected += Load;
         _botCollectorMover.Moved -= Move;
         _botCollectorMover.Stayed += Stay;
     }
@@ -51,7 +51,7 @@ public class BotCollector : Bot
         if (_resourceLoader.LoadProcess(resource))
         {
             _isLoad = true;
-            _botCollectorMover.GoHome();
+            _botCollectorMover.GoHome(HomePosition);
         }      
     }
 

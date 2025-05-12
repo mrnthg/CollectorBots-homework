@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ResourceHarvester : MonoBehaviour
 {
-    public Action ResourceReceived;
+    public event Action ResourceReceived;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,9 +19,12 @@ public class ResourceHarvester : MonoBehaviour
 
         if (bot.IsLoad)
         {
-            resource = bot.Unload();
+            Debug.Log("Забрали ресурс");
+            
+            resource = bot.Unload();         
+            resource.Remove(); 
+            
             ResourceReceived?.Invoke();
-            resource.Remove();
         }
     }
 }

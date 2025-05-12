@@ -27,14 +27,7 @@ public class PathBuilder : MonoBehaviour
             agent.SetDestination(target.position);
             agent.CalculatePath(target.position, _path);
 
-            if (_path.status == NavMeshPathStatus.PathComplete)
-            {
-                _isPathFree = true;
-            }
-            else
-            {
-                _isPathFree = false;
-            }
+            _isPathFree = _path.status == NavMeshPathStatus.PathComplete;          
         }
 
         yield return null;

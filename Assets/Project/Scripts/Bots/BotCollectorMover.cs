@@ -5,7 +5,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(PathBuilder), typeof(BotCollector), typeof(ResourceLoader))]
 public class BotCollectorMover : MonoBehaviour
 {
-    private BotCollector _botCollector;
     private NavMeshAgent _agent;
     private PathBuilder _pathBuilder;
 
@@ -15,8 +14,7 @@ public class BotCollectorMover : MonoBehaviour
     public NavMeshAgent Agent => _agent;
 
     private void Awake()
-    {
-        _botCollector = GetComponent<BotCollector>();
+    {     
         _pathBuilder = GetComponent<PathBuilder>();
         _agent = GetComponent<NavMeshAgent>();
     }
@@ -38,10 +36,10 @@ public class BotCollectorMover : MonoBehaviour
         }                            
     }
 
-    public void GoHome()
+    public void GoHome(Vector3 homePosition)
     {
         Moved?.Invoke();
-        _agent.SetDestination(_botCollector.HomeTransform);      
+        _agent.SetDestination(homePosition);      
     }
 
     private void StopMove()

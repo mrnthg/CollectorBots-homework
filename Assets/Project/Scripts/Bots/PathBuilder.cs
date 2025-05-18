@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,7 +5,6 @@ public class PathBuilder : MonoBehaviour
 {
     private bool _isPathFree;
     private NavMeshPath _path;
-    private Coroutine _coroutine;
 
     private void Awake()
     {
@@ -16,11 +14,11 @@ public class PathBuilder : MonoBehaviour
 
     public bool GetFreePath(NavMeshAgent agent, Transform target)
     {
-        _coroutine = StartCoroutine(NavigatePath(agent, target));
+        NavigatePath(agent, target);
         return _isPathFree;
     }
 
-    private IEnumerator NavigatePath(NavMeshAgent agent, Transform target)
+    private void NavigatePath(NavMeshAgent agent, Transform target)
     {
         if (target)
         {
@@ -28,8 +26,6 @@ public class PathBuilder : MonoBehaviour
             agent.CalculatePath(target.position, _path);
 
             _isPathFree = _path.status == NavMeshPathStatus.PathComplete;          
-        }
-
-        yield return null;
+        }       
     }
 }

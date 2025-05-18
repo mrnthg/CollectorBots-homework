@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ResourceHandler))]
+[RequireComponent(typeof(TransmitterClosestFoundResources))]
 public class BaseCollector : MonoBehaviour
 {
     [SerializeField] private BotSpawner _botSpawner;
 
     private List<Bot> _collectorBots;
-    private ResourceHandler _resourceHandler;
+    private TransmitterClosestFoundResources _transmitterClosestFoundResources;
+
+    public BotSpawner BotSpawner => _botSpawner;
 
     private void Awake()
     {
         _collectorBots = new List<Bot>();
-        _resourceHandler = GetComponent<ResourceHandler>();
+        _transmitterClosestFoundResources = GetComponent<TransmitterClosestFoundResources>();
     }
 
     private void OnEnable()
@@ -43,9 +45,9 @@ public class BaseCollector : MonoBehaviour
     {       
         if (bot.TryGetComponent(out BotCollectorMover botCollectorMover) && bot.IsLoad == false && bot.IsMove == false)
         {
-            if (_resourceHandler.GetCountResources() != 0)
+            if (_transmitterClosestFoundResources.GetCountResources() != 0)
             {
-                Resource resource = _resourceHandler.FindClosestResource();
+                Resource resource = _transmitterClosestFoundResources.FindClosestResource();
                 ResourceProcessing(resource);
                 botCollectorMover.StartMove(resource.transform);
             }

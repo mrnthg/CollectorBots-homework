@@ -3,14 +3,25 @@ using UnityEngine;
 
 public class ResourceHarvester : MonoBehaviour
 {
-    public event Action ResourceReceived;
+    [SerializeField] private BaseCollector _baseCollector;
+
+    public event Action<Resource> ResourceReceived;
+    public event Action CollectionCompleted;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out BotCollector bot))
         {
-            TakeBotResource(bot);
+            if (bot.transform.parent == GetSpawnerBot())
+            {
+                TakeBotResource(bot);
+            }           
         }
+    }
+
+    private Transform GetSpawnerBot()
+    {
+        return _baseCollector.BotSpawner.transform;
     }
 
     private void TakeBotResource(BotCollector bot)
@@ -18,13 +29,12 @@ public class ResourceHarvester : MonoBehaviour
         Resource resource;
 
         if (bot.IsLoad)
-        {
-            Debug.Log("Забрали ресурс");
-            
-            resource = bot.Unload();         
-            resource.Remove(); 
-            
-            ResourceReceived?.Invoke();
+        {            
+            resource = bot.Unload();
+            ResourceReceived?.Invoke(resource);
+            resource.Remove();
+
+            CollectionCompleted?.Invoke();
         }
     }
 }

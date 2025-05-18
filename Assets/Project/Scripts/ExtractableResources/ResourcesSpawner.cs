@@ -7,26 +7,18 @@ public class ResourcesSpawner : Spawner<Resource>
 {
     [SerializeField] private Collider _spawnZone;
     [SerializeField] private int _maxResourceCount;
+    [SerializeField] private float _durationSpawn = 15f;
 
     private float _posY = -1.2f;
     private Bounds _spawnBounds;
-    private List<Resource> _resources = new List<Resource>();
-    private float _durationSpawn = 15f;
+    private List<Resource> _resources = new List<Resource>();   
     private WaitForSeconds _duration;
 
     private void OnEnable()
     {
         _duration = new WaitForSeconds(_durationSpawn);
         CreateAllResources();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            _resources[0].Remove();
-        }
-    }
+    }  
 
     public override void PerformOnGet(Resource resource)
     {

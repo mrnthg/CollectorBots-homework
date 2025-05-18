@@ -18,14 +18,11 @@ public class ResourceLoader : MonoBehaviour
     {
         bool isLoad = false;
 
-        if (resource is Iridium && _botCollector.IsLoad == false)
-        {           
-            if (resource.TryGetComponent(out Transform transform))
-            {
-                _transportableResource = resource;
-                _transportableResource.transform.position = _cargoPosition.position;
-                _transportableResource.transform.SetParent(this.transform);               
-            }
+        if (resource is IResourcable && _botCollector.IsLoad == false)
+        {
+            _transportableResource = resource;
+            _transportableResource.transform.position = _cargoPosition.position;
+            _transportableResource.transform.SetParent(this.transform);
 
             isLoad = true;
         }

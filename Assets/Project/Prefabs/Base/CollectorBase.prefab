@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda4b7e1b07620745b64422e35d674fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _baseCollector: {fileID: 1019429143941164679}
 --- !u!135 &5512035872135572889
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -159,8 +160,8 @@ GameObject:
   - component: {fileID: 911380615297945984}
   - component: {fileID: 2654597932288135582}
   - component: {fileID: 8946831313336077416}
-  - component: {fileID: 4211411369037222389}
   - component: {fileID: 1019429143941164679}
+  - component: {fileID: 2298979010752364296}
   m_Layer: 0
   m_Name: CollectorBase
   m_TagString: Untagged
@@ -218,19 +219,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radiusScan: 1000
---- !u!114 &4211411369037222389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5283539731810790025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504cdbb4d6d61814aa87c5b906802344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _harvester: {fileID: 7142779509156409709}
 --- !u!114 &1019429143941164679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,6 +232,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _botSpawner: {fileID: 4878478396459698359}
+--- !u!114 &2298979010752364296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5283539731810790025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d06957e24161c84db665d17f5dfab41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _harvester: {fileID: 7142779509156409709}
 --- !u!1 &6691853616138887484
 GameObject:
   m_ObjectHideFlags: 0

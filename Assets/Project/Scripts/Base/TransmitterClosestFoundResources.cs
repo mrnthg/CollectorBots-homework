@@ -1,9 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(TerrainScaner))]
-public class ResourceHandler : MonoBehaviour
+public class TransmitterClosestFoundResources : MonoBehaviour
 {
     [SerializeField] private ResourceHarvester _harvester;
 
@@ -21,19 +21,9 @@ public class ResourceHandler : MonoBehaviour
         _terrainScaner = GetComponent<TerrainScaner>();
     }
 
-    private void OnEnable()
-    {
-        _harvester.ResourceReceived += AddResources;
-    }
-
-    private void OnDisable()
-    {
-        _harvester.ResourceReceived -= AddResources;
-    }
-
     private void Start()
     {
-        AddResources();
+        StartCoroutine(FindResources());;
     }
 
     public Resource FindClosestResource()
@@ -44,12 +34,12 @@ public class ResourceHandler : MonoBehaviour
         foreach (Resource resource in _handleResources)
         {
             Vector3 difference = resource.transform.position - _basePosition;
-            float SqrDifference = difference.sqrMagnitude;
+            float sqrDifference = difference.sqrMagnitude;
 
-            if (SqrDifference < distance)
+            if (sqrDifference < distance)
             {
                 target = resource;
-                distance = SqrDifference;
+                distance = sqrDifference;
             }
         }
 
@@ -63,9 +53,18 @@ public class ResourceHandler : MonoBehaviour
         return _handleResources.Count;
     }
 
-    public void AddResources()
+    private void AddResources()
     {
         _handleResources.Clear();
         _handleResources = _terrainScaner.Scan();
+    }
+
+    private IEnumerator FindResources()
+    {
+        while (enabled)
+        {
+            yield return _duration;
+            AddResources();
+        }
     }
 }

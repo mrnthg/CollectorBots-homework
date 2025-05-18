@@ -7,11 +7,10 @@ public class BotCollectorMover : MonoBehaviour
 {
     private NavMeshAgent _agent;
     private PathBuilder _pathBuilder;
+    private float _threshold = 0.001f;
 
     public event Action Moved;
     public event Action Stayed;
-
-    public NavMeshAgent Agent => _agent;
 
     private void Awake()
     {     
@@ -20,8 +19,8 @@ public class BotCollectorMover : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (_agent.destination == transform.position)
+    {      
+        if ((_agent.destination - transform.position).sqrMagnitude < _threshold * _threshold)
         {
             StopMove();
         }
